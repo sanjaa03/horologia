@@ -1,0 +1,14 @@
+[
+    {
+      "id":1,
+      "naziv":"Muski"
+    },
+    {
+      "id":2,
+      "naziv":"Zenski"
+    },
+    {
+        "id":3,
+        "naziv":"Unisex"
+    }
+]

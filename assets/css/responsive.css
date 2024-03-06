@@ -1,0 +1,68 @@
+@media(max-width: 769px){
+    .bar{
+        display: block;
+      }
+    .hamburger{
+      display: block;
+    }
+    .nav-menu{
+      position: fixed;
+      right: -100%;
+      top: 70px;
+      flex-direction: column;
+      width: 100%;
+      text-align: center;
+      
+      transition: 0.3s;
+    }
+    .nav-item{
+        padding: 1.5rem 0;
+      }
+    
+    .nav-menu.active{
+      right: 0;
+    }
+    #aboutImagesOne img{
+      width: 400px;
+      height: 300px;
+    }
+    #aboutImagesTwo img{
+      width: 400px;
+      height: 300px;
+   }
+
+   #carouselExampleCaptions img{
+    height: 320px;
+  }
+   .recenica{
+    font-size: 18px;
+   }
+   #popravkaSlika img{
+    width:400px;
+    height:300px;
+   }
+  }
+
+  @media(max-width: 610px){
+  #aboutImagesOne img{
+    width: 310px;
+    height: 270px;
+  }
+  #aboutImagesTwo img{
+    width: 310px;
+    height: 270px;
+  }
+  #about-text{
+    margin: 50px 0px;
+  }
+  #popravkaSlika img{
+    width:310px;
+    height:270px;
+ }
+}
+
+  @media(max-width: 426px){
+    #carouselExampleCaptions img{
+      height: 260px;
+    }
+    }

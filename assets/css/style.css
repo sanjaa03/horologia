@@ -1,0 +1,152 @@
+*{
+    margin:0px;
+    padding: 0px;
+}
+/*fontovi:Dosis,Bebas Neue,Dancing Script*/
+li{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+}
+.navbar{
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  background-color: #000;
+}
+.nav-menu{
+  display: flex;
+  align-items: center;
+}
+.nav-branding{
+  font-size: 2rem;
+}
+/* transition for links */
+.nav-link{
+  transition: 0.5s ease;
+  color: #fff;
+  margin-top:10px;
+}
+.nav-link:hover{
+  color: rgba(255,255,255,0.3);
+  text-decoration: underline;
+}
+.hamburger{
+  display: none;
+  cursor: pointer;
+}
+.bar{
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background:#fff;
+}
+.nav-item{
+  padding: 0 1.5rem;
+  font-size: 17px;
+}
+.logo{
+  
+  font-family: "Dosis";
+  font-size:25px;
+  font-weight:bold;
+  text-decoration: none;
+}
+
+.colr{
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-menu.active{
+  background:#000;
+  z-index: 1000000;
+}
+/*about*/
+.btn{
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  text-decoration: none;
+  width: 100%;
+  margin-top: 20px;
+}
+.btn:hover{
+  color:rgba(255,255,255,0.3);
+}
+#aboutImagesOne,#aboutImagesTwo {
+  padding: 20px;
+}
+
+#aboutImagesOne {
+  display: flex;
+  justify-content: space-around;
+}
+
+.ml50{
+  margin-left: 30px;
+}
+
+.centar{
+ text-align:center ; 
+}
+.recenica{
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0px;
+  font-size: 30px;
+  font-style: italic;
+  font-family: "Dancing Script";
+}
+.stil{
+  font-family: "Dancing Script";
+  font-size: 40px;
+}
+#brendovi{
+  display:flex;
+  justify-content: space-between;
+ 
+}
+.brend img{
+  width: 200px;
+ height: 100px;
+}
+/*best*/
+.bs{
+  font-family: "Dancing Script";
+  margin-top: 50px;
+  font-size: 40px;
+}
+.aktuelna{
+  margin-left: 10px;
+  color: red;
+  font-size: 25px;
+}
+.cena{
+  display: flex;
+  justify-content: space-between;
+}
+.btna{
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  text-decoration: none;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+#popravkaSlika{
+  display:flex;
+  justify-content: space-around;
+}
