@@ -150,3 +150,35 @@ a{
   display:flex;
   justify-content: space-around;
 }
+
+footer {
+  background-color: #000;
+}
+footer p {
+  color: #fff
+}
+footer .fa {
+  color: #fff;
+  font-size: 15px;
+}
+footer .fa-solid {
+  color: #fff;
+}
+ul{
+  padding-left: 0px;
+}
+/*autor*/
+.imgabout {
+  margin: 50px 0px;
+  display: flex;
+  justify-content: space-around;
+}
+.imgabout img {
+  box-shadow: 10px 10px 8px rgba(0,0,0,0.2);
+}
+
+.text {
+  text-align: center;
+  flex-direction: column;
+  color: #000;
+}
