@@ -2,18 +2,6 @@ var satovi=[];
 
 window.onload=function(){
   $.ajax({
-    url:"assets/js/menu.json",
-    method:"get",
-    dataType:"json",
-    success:function(data){
-      ispisMenija(data);
-    },
-    erorr:function(err){
-      console.error(err);
-    }
-  })
-
-  $.ajax({
     url:"assets/js/proizvodi.json",
     method:"get",
     dataType:"json",
@@ -32,6 +20,8 @@ window.onload=function(){
     success:function(data){
       satovi=data
       ispisProizvodaSvih(satovi);
+      proizvodiLocalStorageSklad("proizvodi",satovi);
+    
     },
     erorr:function(err){
       console.error(err);
@@ -61,6 +51,21 @@ window.onload=function(){
       console.error(err);
     }
   })
+ $.ajax({
+    url:"assets/js/proizvodi.json",
+    method:"get",
+    dataType:"json",
+    success:function(data){
+      ispisPunaKorpa(data);
+    },
+    erorr:function(err){
+      console.error(err);
+    }
+  })
+
+  //ispis broja proizvoda u korpi
+  brojProizvodaUKorpi();
+  
 }
 
 
@@ -77,7 +82,7 @@ document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", 
   nav_menu.classList.remove("active");
 }));
 //ispis menija
-function ispisMenija(linkovi){
+/*function ispisMenija(linkovi){
   let ispis="";
   for(let link of linkovi){
      ispis+=`<li class="nav-item">
@@ -85,7 +90,7 @@ function ispisMenija(linkovi){
    </li>`
   }
   document.querySelector("#meni").innerHTML=ispis;
-}
+}*/
 
 
 //read more
@@ -116,9 +121,6 @@ function ispisProizvoda(satovi){
        <h5 class="card-title">${sat.naziv}</h5>
        <div class="cena">${obradaCene(sat.cena)}</div
        <ul>${specifikacijaObrada(sat.specifikacije)}</ul>
-       <button type="button" id="dugmeAdd" class="btna">
-       ADD TO CART
-   </button>
      </div>
    </div>
  </div>`
@@ -134,7 +136,6 @@ function ispisProizvoda(satovi){
    satovi=filterBrend(satovi);
    satovi=filterPol(satovi);
    satovi=sortiranje(satovi);
-   console.log(satovi);
   if(satovi.length>0){
   for(let sat of satovi){
    ispis+=`<div class="col-12 col-md-6 col-lg-3 mb-4">
@@ -144,7 +145,7 @@ function ispisProizvoda(satovi){
        <h5 class="card-title">${sat.naziv}</h5>
        <div class="cena">${obradaCene(sat.cena)}</div>
        <ul>${specifikacijaObrada(sat.specifikacije)}</ul>
-       <button type="button" id="dugmeAdd" class="btna">
+       <button type="button" id="dugmeAdd" class="btna" data-id="${sat.id}">
        ADD TO CART
    </button>
      </div>
@@ -153,6 +154,7 @@ function ispisProizvoda(satovi){
  }
 }
 document.querySelector("#prikazProizvodaSvih").innerHTML=ispis;
+$('.btna').click(dodajUKorpu);
 }
 //prover cene
 function obradaCene(stara){
@@ -313,8 +315,211 @@ function sortiranje(proizvodi){
           }
       })
   }
-  console.log(sortProizvod);
   return sortProizvod;
+}
+//kontakt
+let taster = document.querySelector("#btnPrijava");
+taster.addEventListener("click", obradaForme);
+
+function obradaForme(){
+  var brojGresaka = 0;
+  let objImePrezime,objEmail, objAdresa,objNapomena;
+
+  objImePrezime = document.querySelector("#tbImePrezime");
+  objEmail = document.querySelector("#tbEmail");
+  objAdresa = document.querySelector("#tbAdresa");
+  objNapomena = document.querySelector("#taNapomena");
+
+  let reImePrezime,reEmail, reAdresa;
+  reImePrezime = /^[A-Z][a-z]{2,14}(\s[A-Z][a-z]{2,14})+$/;
+  reEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`~-]+@[a-zA-Z0-9-]+(.com)+$/;
+  reAdresa = /^(([A-Z][a-z]{1,15}(\.)?)|([1-9][0-9]{0,2}(\.)?))[a-zA-Z0-9\s\/\-]+$/;
+
+  proveraRegularnimIzrazima(reImePrezime, objImePrezime, "First and Last name must start with uppercase!(Example:Ana Johnson)");
+  proveraRegularnimIzrazima(reEmail, objEmail, "Email must be in format: something@example.com");
+  proveraRegularnimIzrazima(reAdresa, objAdresa, "Address must be in format:");
+
+  function proveraRegularnimIzrazima(regularni, objekat, poruka){
+      if(!regularni.test(objekat.value)){
+          objekat.nextElementSibling.classList.remove("sakrij");
+          objekat.nextElementSibling.innerHTML = poruka;
+          objekat.classList.add("crvena-bordura");
+          brojGresaka++;
+      }
+      else{
+          objekat.nextElementSibling.classList.add("sakrij");
+          objekat.nextElementSibling.innerHTML = "";
+          objekat.classList.remove("crvena-bordura");
+      }
+  }
+  if(objNapomena.value.length < 10){
+      objNapomena.nextElementSibling.classList.remove("sakrij");
+      objNapomena.nextElementSibling.innerHTML = "Note must be at least 10 characters long!";
+      objNapomena.classList.add("crvena-bordura");
+brojGresaka++;
+  }
+  else{
+      objNapomena.nextElementSibling.classList.add("sakrij");
+      objNapomena.nextElementSibling.innerHTML = "";
+      objNapomena.classList.remove("crvena-bordura");
+  }
+
+  if(brojGresaka == 0){
+      let divIspis = document.querySelector("#ispis");
+      divIspis.setAttribute("class", "alert alert-success mt-4");
+
+      let formatZaIspis = `Your message is sent!`;
+
+      divIspis.innerHTML = formatZaIspis;
+
+      document.getElementById("forma-prijava").reset();
+  }
+
 }
 
 
+
+/*setItemLocalStorage skladisti podatke u local storage
+function proizvodiLocalStorageSklad(ime,podaci){
+  localStorage.setItem(ime,JSON.stringify(podaci));
+}
+//dohvatanje iz local storage
+function uzmiPodatkeLocalStorage(ime){
+  return JSON.parse(localStorage.getItem(ime));
+}
+//dodavanje ukorpu
+function dodajUKorpu(){
+  let id=$(this).data('id');
+  var proizvodiIzKorpe=uzmiPodatkeLocalStorage("proizvodiUKorpi");
+  if(proizvodiIzKorpe){
+      if(proizvodPostoji()){
+         povecajKolicinu();
+      }
+      else{
+          dodajNovProizvod();
+          brojProizvodaUKorpi();
+      }
+  }
+  else{
+    prviProizvod();
+    brojProizvodaUKorpi();
+  }
+
+//dodaje u korpu proizvod ako je korpa prazna
+  function prviProizvod(){
+    let proizvodiNizKorpa=[];
+      proizvodiNizKorpa[0]={
+        id:id,
+        kolicina:1
+      };
+     proizvodiLocalStorageSklad("proizvodiUKorpi",proizvodiNizKorpa);
+  }
+
+  //proverava da li postoji proizvod u korpi
+  function proizvodPostoji(){
+    return proizvodiIzKorpe.filter(p=>p.id==id).length;
+  }
+  //povecaj kolicinu
+  function povecajKolicinu(){
+    let proizvodiIzLocS=uzmiPodatkeLocalStorage("proizvodiUKorpi");
+   for(let p in proizvodiIzLocS){
+    if(proizvodiIzLocS[p].id==id){
+      proizvodiIzLocS[p].kolicina++;
+      break;
+    }
+   }
+   proizvodiLocalStorageSklad("proizvodiUKorpi",proizvodiIzLocS);
+  }
+  //dodaj nov proizvod(dodaj ako ga nema u korpi)
+  function dodajNovProizvod(){
+    let proizvodiIzLocS=uzmiPodatkeLocalStorage("proizvodiUKorpi");
+    proizvodiIzLocS.push({
+      id:id,
+      kolicina:1
+    });
+    proizvodiLocalStorageSklad("proizvodiUKorpi",proizvodiIzLocS);
+  }
+  
+}
+function brojProizvodaUKorpi(){
+  let proizvodiIzKorpeLS=uzmiPodatkeLocalStorage("proizvodiUKorpi");
+  if(proizvodiIzKorpeLS!=null){
+   let brojProizvoda = proizvodiIzKorpeLS.length;
+   $('#brProizvoda').html(`(${brojProizvoda})`)
+  }
+  else{
+    $('#brProizvoda').html(`(0)`);
+  }
+}
+
+
+var trenutniURL=window.location.href;
+if(trenutniURL.includes("korpa.html")){
+   let proizvodiIzLS=uzmiPodatkeLocalStorage("proizvodiUKorpi");
+   if(proizvodiIzLS==null){
+     ispisPraznaKorpa();
+   }
+   else{
+    ispisPunaKorpa();
+   }
+}
+
+//ispis za praznu korpu
+function ispisPraznaKorpa(){
+  let ispis="";
+  ispis+=`<div class="praznaKorpa">
+       <h1>Your cart is empty!</h1>
+  </div>`
+  $("#korpa").html(ispis);
+}
+//ispis za punu korpu
+function ispisPunaKorpa(podaci){
+  let proizvodiIzLS=uzmiPodatkeLocalStorage("proizvodiUKorpi");
+  let proizvodiZaIspisKorpa=[];
+  proizvodiZaIspisKorpa=podaci.filter(p=>{
+    for(let pro of proizvodiIzLS){
+       if(p.id==pro.id){
+        p.kolicina=pro.kolicina;
+        return true;
+       }
+    }
+    return false;
+  });
+  ispisiPorudzbinu(proizvodiZaIspisKorpa);
+}
+
+//ispis sadrzaja korpe
+function ispisiPorudzbinu(pro){
+  let ispis="";
+  ispis+=`<table class="tabela text-center">
+            <thead>
+            <th>Product</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Sum</th>
+            <th>Delete</th>
+            </thead><tbody>`
+  for(let p of pro){
+    ispis+=`<tr class="border">
+         <td class="slikaMala"><img src="${p.srcSlika}" alt="${p.naziv}"/></td>
+         <td>${p.naziv}</td>
+         <td>${p.cena.aktuelnaCena}€</td>
+         <td>${p.kolicina}</td>
+         <td>${p.cena.aktuelnaCena*p.kolicina}€</td>
+         <td><button type="button" onclick='ukloniIzKorpe(${p.id})' class="obrisi">Delete</button></td>
+    </tr>`
+  }
+  $("#korpa").html(ispis);
+}
+function cena(c){
+  
+}
+
+function ukloniIzKorpe(id){
+  let proizvodi=uzmiPodatkeLocalStorage("proizvodiUKorpi");
+  let neobrisani=proizvodi.filter(p=>p.id !=id );
+  proizvodiLocalStorageSklad("proizvodiUKorpi",neobrisani);
+  ispisiPorudzbinu(neobrisani);
+}
+*/

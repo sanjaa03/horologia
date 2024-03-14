@@ -145,6 +145,13 @@ a{
   margin-top: 20px;
   border-radius: 5px;
 }
+.obrisi{
+  background-color: #000;
+  color: #fff;
+  padding: 5px;
+  text-decoration: none;
+  border-radius: 5px;
+}
 
 #popravkaSlika{
   display:flex;
@@ -181,4 +188,46 @@ ul{
   text-align: center;
   flex-direction: column;
   color: #000;
+}
+#korpa{
+  margin:50px 0px;
+}
+.praznaKorpa{
+  text-align: center;
+  height: 450px;
+}
+.slikaMala img{
+  height: 100px;
+  width: 100px;
+  margin:20px 0px;
+}
+.tabela thead{
+  background-color: #000;
+  color:#fff;
+}
+/*kontakt*/
+.sakrij{
+  display: none;
+}
+.crvena-bordura{
+  border: 1px solid #ff0000;
+}
+.stilovi{
+  margin-top: 80px;
+  display:block;
+  background-color:rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 5%;
+  border-radius: 10px;
+  width:70%;
+  margin-bottom: 50px;
+}
+.w100{
+width:100%;  
+}
+.dugme1{
+  text-align: center;
+}
+.sum{
+  text-align: center;
 }

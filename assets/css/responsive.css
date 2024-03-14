@@ -1,27 +1,31 @@
+@media(max-width: 900px){
+  .bar{
+    display: block;
+  }
+.hamburger{
+  display: block;
+}
+.nav-menu{
+  position: fixed;
+  right: -100%;
+  top: 70px;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  
+  transition: 0.3s;
+}
+.nav-item{
+    padding: 1.5rem 0;
+  }
+
+.nav-menu.active{
+  right: 0;
+}
+}
+
 @media(max-width: 769px){
-    .bar{
-        display: block;
-      }
-    .hamburger{
-      display: block;
-    }
-    .nav-menu{
-      position: fixed;
-      right: -100%;
-      top: 70px;
-      flex-direction: column;
-      width: 100%;
-      text-align: center;
-      
-      transition: 0.3s;
-    }
-    .nav-item{
-        padding: 1.5rem 0;
-      }
-    
-    .nav-menu.active{
-      right: 0;
-    }
+   
     #aboutImagesOne img{
       width: 400px;
       height: 300px;

@@ -97,7 +97,7 @@
         "srcSlika":"assets/img/seikoAutomaticAutomatic.jpg",
         "cena":{
             "staraCena":680,
-            "aktuelnaCena":480
+            "aktuelnaCena":"480"
         },
         "bestseller":false,
         "specifikacije":[
